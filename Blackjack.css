@@ -1,0 +1,54 @@
+/* General Styles */
+body {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-top: 50px;
+    color: #f39c12;
+}
+
+/* Button Styles */
+button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #c0392b;
+}
+
+/* Text Styles */
+p {
+    font-size: 1.5rem;
+    margin: 15px;
+}
+
+#message-el {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+#chips-el, #card-el, #sum-el {
+    font-size: 1.5rem;
+}
+
+/* Chips Counter Style */
+#chips-el {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: #27ae60;
+}
