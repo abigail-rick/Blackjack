@@ -1,4 +1,4 @@
-
+let houseCards = [];
 let playerCards = [];
 let sum = 0;
 let hasBlackjack = false;
@@ -9,6 +9,7 @@ const sumEl = document.getElementById('sum-el');
 const messageEl = document.getElementById('message-el');
 const cardEl = document.getElementById('card-el');
 const resetBtn = document.getElementById('reset');
+const challengeHouse = document.getElementById('challengeHouse');
 let playerEl = document.getElementById("player");
 let chipsEl = document.getElementById('chips-el');
 let houseEl = document.getElementById('house-el');
@@ -27,7 +28,18 @@ function getRandomCard(){
    }
  }
 
- 
+ function getRandomHouseCard(){
+    let houseRandomCard = Math.floor(Math.random() * 17) + 1;
+    if (houseRandomCard === 1){
+        return 11;
+   } else if (houseRandomCard > 10){
+    return 10;
+   } else {
+    return houseRandomCard;
+   }
+ }
+
+
 function startGame(){
     resetBtn.innerHTML = "RESET";
     isAlive = true;
@@ -39,6 +51,17 @@ function startGame(){
     sum = playerFirstCard + playerSecondCard;
     renderGame();
     }
+
+    challengeHouse.addEventListener("click", function(){
+        let houseFirstCards = getRandomHouseCard();
+        let houseSe
+        if (houseCards.value > playerCards.value){
+        messageEl.textContent = "House Wins!";
+        } else {
+        messageEl.textContent = "Player Wins!";
+        console.log(houseCards);
+        }
+    })
 
 function renderGame(){
     cardEl.textContent = "Cards: " + playerCards[0] + ", " + playerCards[1];
