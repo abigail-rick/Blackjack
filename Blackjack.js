@@ -1,14 +1,10 @@
 
+
 let houseFirstCard;
 let houseSecondCard;
 let playerCards = [];
-
 let sum = 0;
 let houseSum = 0;
-let hasBlackjack = false;
-let isAlive = false;
-let chips = 100;
-let currentChips = 0;
 let message = "";
 const sumEl = document.getElementById('sum-el');
 const messageEl = document.getElementById('message-el');
@@ -16,11 +12,7 @@ const cardEl = document.getElementById('card-el');
 const resetBtn = document.getElementById('reset');
 const stay = document.getElementById('stay');
 let playerEl = document.getElementById("player");
-let chipsEl = document.getElementById('chips-el');
 let houseEl = document.getElementById('house-el');
-let chipsToPlay = 10;
-
-
 
 function getRandomCard(){
     let randomCard = Math.floor(Math.random() * 13) + 1;
@@ -41,20 +33,19 @@ function startGame(){
     playerCards.push(playerSecondCard);
     houseFirstCard = getRandomCard();
     houseSecondCard = getRandomCard();
-    currentChips = chips - chipsToPlay;
-    chipsEl.textContent = "Chips: $" + currentChips;
     houseSum = houseFirstCard + houseSecondCard;
     sum = playerFirstCard + playerSecondCard;
     houseEl.textContent = "The House's cards: ?, " + houseSecondCard;
-    console.log(houseFirstCard, houseSecondCard);
-    console.log(playerCards);
     renderGame();
+    console.log(playerCards);
+    console.log(houseFirstCard, houseSecondCard);
     }
 
     stay.addEventListener("click", function() {
        houseEl.textContent = "The House's cards: " + houseFirstCard + " , " + houseSecondCard;
-        messageEl.textContent = "The House draws a third card";
+        
               if (houseSum <= 16 && sum > houseSum) {
+                messageEl.textContent = "The House draws a third card";
                 setTimeout(function() {
                 let houseThirdCard = getRandomCard();  // House draws a third card
                 houseSum += houseThirdCard;
@@ -66,17 +57,12 @@ function startGame(){
         }
     });
 
-    
-
     function renderGame() {
     cardEl.textContent = "Cards: " + playerCards.join(", ");
     sumEl.textContent = "Sum: " + sum;
     if (sum > 21) {
         messageEl.textContent = "You're out of the game!";
-        } else if (sum === 21) {
-        hasBlackjack = true;
-        chips += 25;  // Reward for Blackjack
-        chipsEl.textContent = "Chips: $" + chips;  
+        } else if (sum === 21) { 
         messageEl.textContent = "Wohoo! You've got Blackjack!";
     } else {
         messageEl.textContent = "Do you want to draw a new card?";
@@ -85,37 +71,37 @@ function startGame(){
 function renderGamePart2(){
     if (houseSum > 21) {
         messageEl.textContent = "House busted!";
-        chips += 10;  
-        chipsEl.textContent = "Chips: $" + chips;  
     } else if (sum <= 21 && houseSum > sum) {
         messageEl.textContent = "The House wins with " + houseSum + "!";
         
     } else if (sum <= 21 && houseSum < sum) {
         messageEl.textContent = "You win!";
-        chips += 10;  
-        chipsEl.textContent = "Chips: $" + chips;  
-}    
+        
+    } else if (sum === houseSum) {
+        messageEl.textContent = "It's a standoff";
+      
+    }
 }
 
 function newCard(){
     let thirdCard = getRandomCard();
     playerCards.push(thirdCard);
     sum += thirdCard;
-    cardEl.textContent = "Cards: " + playerCards;
+    cardEl.textContent = "Cards: " + playerCards.join(", ");
     renderGame();
 }
 
 resetBtn.addEventListener("click", function restart() {
     playerCards = [];
-    houseFirstCard = houseSecondCard = houseThirdCard = null;
+    
     sum = 0;
     houseSum = 0;
-    currentChips = chips - chipsToPlay;
+    
 
     messageEl.textContent = "Do you want to draw another card?";
     cardEl.textContent = "Cards:";
     sumEl.textContent = "Sum:";
-    chipsEl.textContent = "Chips: $" + currentChips;
-
+    houseEl.textContent = "The House's Cards: ?, ?"
+    
     startGame();
 });
