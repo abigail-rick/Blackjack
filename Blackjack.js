@@ -1,3 +1,15 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"; 
+
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+const appSettings = {
+    databaseURL: "https://blackjack-game-abr-default-rtdb.firebaseio.com/"
+}
+console.log(appSettings);
+
+const app = initializeApp(appSettings);
+const database = getDatabase(app);
+const gameDataInDB = ref(database, "GameData");
 
 
 let houseFirstCard;
@@ -5,7 +17,6 @@ let houseSecondCard;
 let playerCards = [];
 let sum = 0;
 let houseSum = 0;
-let message = "";
 const sumEl = document.getElementById('sum-el');
 const messageEl = document.getElementById('message-el');
 const cardEl = document.getElementById('card-el');
@@ -51,6 +62,8 @@ function startGame(){
                 houseSum += houseThirdCard;
                 houseEl.textContent = "The House's cards: " + houseFirstCard + " , " + houseSecondCard + " , " + houseThirdCard;    
                 renderGamePart2();
+                
+            
         }, 3000);  
     } else {
         renderGamePart2();
@@ -67,6 +80,7 @@ function startGame(){
     } else {
         messageEl.textContent = "Do you want to draw a new card?";
     }
+    push(gameDataInDB, playerCards);
 }
 function renderGamePart2(){
     if (houseSum > 21) {
@@ -81,6 +95,7 @@ function renderGamePart2(){
         messageEl.textContent = "It's a standoff";
       
     }
+    push(gameDataInDB, playerCards);
 }
 
 function newCard(){
@@ -105,3 +120,8 @@ resetBtn.addEventListener("click", function restart() {
     
     startGame();
 });
+
+    window.startGame = startGame;
+    window.newCard = newCard;
+  
+
